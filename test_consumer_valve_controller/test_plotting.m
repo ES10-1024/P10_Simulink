@@ -6,7 +6,7 @@ plot(out.consumer_32.v11_12_32_demand)
 hold on
 plot(out.consumer_32.q_32_v1)
 grid
-legend('Refrence', 'Measurement')
+legend('Reference', 'Measurement')
 title("")
 xlabel("Time [s]")
 ylabel("Flow [m^3/h]")
