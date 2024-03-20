@@ -1,4 +1,4 @@
-function constants = standardConstants()
+function constants = scaled_standard_constants()
   %% Constraints   
 %Define the minimum and maximum amount each pump are allowed to pump during a day
 constants.TdMin1=0;
