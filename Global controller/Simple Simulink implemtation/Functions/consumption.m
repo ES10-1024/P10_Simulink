@@ -6,7 +6,7 @@ function [consumption,consumptionNoise] = consumption(currentTime)
 
 %% Define some values 
 %Importing constant valus: 
-c=standardConstants();
+c=scaled_standard_constants();
 %The time between samples 
 TimeBetweenSamples=(3600*c.ts)/4;
 
@@ -28,10 +28,10 @@ end
 
 
 %% Loading in the data needed for the consumption model
-std_week=load('std_week.mat'); 
+std_week=load('prediction_scaled.mat'); 
 std_week=std_week.std_week';
 
-demand_data=load('demand_data.mat'); 
+demand_data=load('consumption_scaled.mat'); 
 
 demand_data=demand_data.demand_Bjerringbro;
 

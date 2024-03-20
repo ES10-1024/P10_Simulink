@@ -2,7 +2,7 @@
 function [up1,uAll] = mpcRun(data,uPrev)
 % The inputs is:
 % Standard constant, which also have the current water volume, and demand
-c=standardConstants; 
+c=scaled_standard_constants; 
 
 c.d=data.d(:,:,end); 
 c.Je=data.Je(:,end); 

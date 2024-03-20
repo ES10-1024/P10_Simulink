@@ -9,7 +9,7 @@ function [ElPrices] = ElectrictyPrices(currentTime)
 
 %% Making a few definitions
 %Current time with respect to hours. 
-c=standardConstants();
+c=scaled_standard_constants();
 CurrentTimeHours=floor(currentTime*c.AccTime/3600)+1;  
 ElPrices=zeros(c.Nc,1);
 

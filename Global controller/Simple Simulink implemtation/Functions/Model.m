@@ -8,7 +8,7 @@ function [Vp1] = Model(V,u,d)
 %d demand in m^3/h for the entire control horizion
 
 %% Define constant from the rapport
-c=standardConstants;
+c=scaled_standard_constants;
 %% Define the state space matrixs (from the report) 
 A=1; 
 Bu=ones(1,c.Nu)*c.ts; 
