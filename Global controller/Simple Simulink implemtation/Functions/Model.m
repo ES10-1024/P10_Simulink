@@ -15,6 +15,6 @@ Bu=ones(1,c.Nu)*c.ts;
 Bd=ones(1,c.Nd)*c.ts;
 
 %% Determine the next output corresponding to the output of the function 
-Vp1=A*V+Bu*u(1:3,1)-Bd*d(1,1);
+Vp1=A*V+Bu*u(1:c.Nu,1)-Bd*d(1,1);
 
 end

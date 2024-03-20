@@ -22,7 +22,8 @@ clf
 addpath("Global controller\Simple Simulink implemtation\Data to compare\")
 load('Global controller\Simple Simulink implemtation\Data to compare\Vglobal')
 %Makign a plot of the volume
-V=simData.logsout{3}.Values.Data;
+waterLevelmm=simData.logsout{3}.Values.Data;
+V=waterLevelmm/1000*c.At;
 Vglobal=Vglobal(2:end)
 hold on 
 plot(V)
@@ -45,9 +46,10 @@ uSimulink=squeeze(uSimulink)';
 clf
 hold on 
 stairs(uMatlab(1:3,:)')
-stairs(uSimulink(1:3,:)')
+stairs(uSimulink(1:2,:)')
 xlim([0 48])
 hold off 
+legend('Matlab','Matlab','Matlab','Simulink','Simulink','Simulink')
 %% Written up a few matrixes 
 c.A_1=[];
 for i=1:c.Nc
