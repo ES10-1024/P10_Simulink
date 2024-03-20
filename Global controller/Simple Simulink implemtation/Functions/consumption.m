@@ -1,9 +1,8 @@
-function [consumption,consumptionNoise] = consumption(currentTime)
+function [consumption,consumptionNoise] = consumption(currentTime,usedAccTime)
 % Here it is desired to make a model for the consumption for the entire controller horizion, given the current time and control horizion. 
 %The input is: 
 %currentTime: the currentTime
-%d current consumption such that only 1 value is changed ;D 
-
+% usedAccTime if acclereted time is used, is a true false statement
 %% Define some values 
 %Importing constant valus: 
 c=scaled_standard_constants();
@@ -65,7 +64,11 @@ NewDemand_data=NewDemand_data/samplesChanges;
 
 %% Determining consumption model
 %First the start position is determinted in regard to time of week. 
-StartPosition=(currentTime*c.AccTime)-(floor((currentTime*c.AccTime)/(SecondsPerWeek))*SecondsPerWeek);
+if usedAccTime == true 
+    StartPosition=(currentTime*c.AccTime)-(floor((currentTime*c.AccTime)/(SecondsPerWeek))*SecondsPerWeek);
+else 
+    StartPosition=(currentTime)-(floor((currentTime)/(SecondsPerWeek))*SecondsPerWeek);
+end 
 StartPosition=StartPosition/3600+1;
 %The consumption with noise is not weekly wrap around and can therefore be set: 
 consumptionNoise=NewDemand_data(StartPosition:StartPosition+c.Nc-1,1); 
