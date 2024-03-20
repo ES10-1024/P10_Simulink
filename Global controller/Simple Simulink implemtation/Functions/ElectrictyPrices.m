@@ -1,16 +1,22 @@
-function [ElPrices] = ElectrictyPrices(currentTime)
+function [ElPrices] = ElectrictyPrices(currentTime,usedAccTime)
 %% In this script it is desired to return a vector of the eletricty prices which are neccesary for the MPC to run
 
 %% First define some variables
 % Input
 % currentTime The current Time in seconds! 
-% CurrentDay THe current day 
+% usedAccTime if acclereted time is used, is a true false statement
 
 
 %% Making a few definitions
 %Current time with respect to hours. 
 c=scaled_standard_constants();
-CurrentTimeHours=floor(currentTime*c.AccTime/3600)+1;  
+
+if usedAccTime==true
+    CurrentTimeHours=floor(currentTime*c.AccTime/3600)+1;   
+else 
+    CurrentTimeHours=floor(currentTime/3600)+1;  
+end 
+
 ElPrices=zeros(c.Nc,1);
 
 %% Loading in the eletricty prices

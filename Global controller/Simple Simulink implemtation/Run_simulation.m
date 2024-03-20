@@ -15,12 +15,13 @@ simTime=simHour/c.AccTime*3600;
 c.Tsim=num2str(simTime); 
 c.tsSim=num2str(c.ts*3600); 
 
-simData=sim('GlobalMPC.slx',"StartTime",'0',"StopTime",c.Tsim,'FixedStep','200');
+simData=sim('GlobalMPC.slx',"StartTime",'600',"StopTime",c.Tsim,'FixedStep','200');
 
 %% Plotting a comparision between Matlab and Simulink global implementation
 clf
 addpath("Global controller\Simple Simulink implemtation\Data to compare\")
-load('Global controller\Simple Simulink implemtation\Data to compare\Vglobal')
+Vglobal=load('Global controller\Simple Simulink implemtation\Data to compare\Vglobal')
+Vglobal=Vglobal.V;
 %Makign a plot of the volume
 waterLevelmm=simData.logsout{3}.Values.Data;
 V=waterLevelmm/1000*c.At;
@@ -33,22 +34,21 @@ hold off
 ylabel('Volume [m^{3}]')
 xlabel('Samples [*]')
 grid on
-ylim([220 600])
 xlim([0 49])
 legend('Simulink Volume','Matlab Volume','Constraints')
 %% Plotting the input for the two different setups 
-% load('Global controller\Simple Simulink implemtation\Data to compare\uAllGlobal.mat')
-% uMatlab=uAll(:,2:end);
+load('Global controller\Simple Simulink implemtation\Data to compare\uAllGlobal.mat')
+uMatlab=uAll(:,2:end);
 clear uAll 
 uSimulink=simData.logsout{1}.Values.Data;
 uSimulink=squeeze(uSimulink)'; 
 clf
 hold on 
-stairs(uMatlab(1:3,:)')
+stairs(uMatlab(1:2,:)')
 stairs(uSimulink(1:2,:)')
 xlim([0 48])
 hold off 
-legend('Matlab','Matlab','Matlab','Simulink','Simulink','Simulink')
+legend('Matlab','Matlab','Simulink','Simulink')
 %% Written up a few matrixes 
 c.A_1=[];
 for i=1:c.Nc
