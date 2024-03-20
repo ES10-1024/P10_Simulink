@@ -6,7 +6,7 @@ clc
 clear
 %% Adding path and standard values
 addpath("Global controller\Simple Simulink implemtation\Functions\")
-c=standardConstants; 
+c=scaled_standard_constants; 
 %% 
 simHour=48; 
 simTime=simHour/c.AccTime*3600; 
@@ -24,7 +24,6 @@ load('Global controller\Simple Simulink implemtation\Data to compare\Vglobal')
 %Makign a plot of the volume
 waterLevelmm=simData.logsout{3}.Values.Data;
 V=waterLevelmm/1000*c.At;
-Vglobal=Vglobal(2:end)
 hold on 
 plot(V)
 plot(Vglobal(2:end))
@@ -35,11 +34,11 @@ ylabel('Volume [m^{3}]')
 xlabel('Samples [*]')
 grid on
 ylim([220 600])
-xlim([0 26])
+xlim([0 49])
 legend('Simulink Volume','Matlab Volume','Constraints')
 %% Plotting the input for the two different setups 
-load('Global controller\Simple Simulink implemtation\Data to compare\uAllGlobal.mat')
-uMatlab=uAll(:,2:end);
+% load('Global controller\Simple Simulink implemtation\Data to compare\uAllGlobal.mat')
+% uMatlab=uAll(:,2:end);
 clear uAll 
 uSimulink=simData.logsout{1}.Values.Data;
 uSimulink=squeeze(uSimulink)'; 

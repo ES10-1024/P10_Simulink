@@ -29,11 +29,11 @@ end
 
 %% Loading in the data needed for the consumption model
 std_week=load('prediction_scaled.mat'); 
-std_week=std_week.std_week';
+std_week=std_week.scaled_prediction';
 
 demand_data=load('consumption_scaled.mat'); 
 
-demand_data=demand_data.demand_Bjerringbro;
+demand_data=demand_data.scaled_consumption;
 
 %% Making a new average given the sample time
 %First the changes in sample is added for instance going 
