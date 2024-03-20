@@ -50,6 +50,8 @@ constants.e3=1.5; %To Be Updated!
 constants.rf1=1.906*10^9; 
 constants.rf2=2.542*10^9; 
 constants.rf3=3.018*10^9; 
+%Defining ressistance after 
+constants.rfTogether=2.489*10^9; 
 
 % Defining pipe elevation In meters
 constants.z1=50; 
@@ -57,7 +59,7 @@ constants.z2=70;
 constants.z3=80;
 
 %Amount of pumps
-constants.Nu=3; 
+constants.Nu=2; 
 %Amount of demands
 constants.Nd=1;
 

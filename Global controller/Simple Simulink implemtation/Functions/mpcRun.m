@@ -34,27 +34,17 @@ c.v2=ones(c.Nu*c.Nc,1);
 c.v2(1:3:end) =0;
 c.v2(3:3:end) =0;
 
-c.v3=ones(c.Nu*c.Nc,1);
-c.v3(1:3:end) =0;
-c.v3(2:3:end) =0;
 %Making matrix which picks out 1 of the pumps for the enitre control
 %horizion
 c.A_31=[];
 for i=1:c.Nc
-    c.A_31 = blkdiag(c.A_31,[1 0 0]);
+    c.A_31 = blkdiag(c.A_31,[1 0]);
 end
 
 c.A_32=[];
 for i=1:c.Nc
-    c.A_32 = blkdiag(c.A_32,[0 1 0]);
+    c.A_32 = blkdiag(c.A_32,[0 1]);
 end
-
-c.A_33=[];
-for i=1:c.Nc
-    c.A_33 = blkdiag(c.A_33,[0 0 1]);
-end
-
-
 %% Constraints
 %Upper and lower limit for the water tower
 problem.Constraints.towerU = ones(c.Nc,1)*c.V + c.A_2*(c.A_1*u-c.d) <= c.Vmax;    
@@ -63,29 +53,25 @@ problem.Constraints.towerL = ones(c.Nc,1)*c.V + c.A_2*(c.A_1*u-c.d) >= c.Vmin;
 %Extration litmit for each pump
 problem.Constraints.extract1 = c.v1'*u <= c.TdMax1;
 problem.Constraints.extract2 = c.v2'*u <= c.TdMax2;
-problem.Constraints.extract3 = c.v3'*u <= c.TdMax3;
 
 %Max and minimum flow for each pump 
 problem.Constraints.pump1U = c.A_31*u <= c.umax1;
 problem.Constraints.pump2U = c.A_32*u <= c.umax2;
-problem.Constraints.pump3U = c.A_33*u <= c.umax3;
 problem.Constraints.pump1L = c.A_31*u >=0;
 problem.Constraints.pump2L = c.A_32*u >=0;
-problem.Constraints.pump3L = c.A_33*u >=0;
 %% Cost function
 %Water level plus at bit extra to make it nice and short
 h=c.g0*c.rhoW*1/c.At*(c.A_2*(c.A_1*u-c.d)+c.V);
 
 %Defining cost function for each of the pumps  
-J1 = ones(1,c.Nc)*(c.e1*c.Je/1000.*(c.A_31*(u.*u.*u./3600^3*c.rf1 + u/3600*c.g0*c.rhoW*c.z1) + (c.A_31*u/3600).*h+c.A_31*u.*(rf*c.A_1*u.*u)));
-J2 = ones(1,c.Nc)*(c.e2*c.Je/1000.*(c.A_32*(u.*u.*u./3600^3*c.rf2 + u/3600*c.g0*c.rhoW*c.z2) + (c.A_32*u/3600).*h));
-J3 = ones(1,c.Nc)*(c.e3*c.Je/1000.*(c.A_33*(u.*u.*u./3600^3*c.rf3 + u/3600*c.g0*c.rhoW*c.z3) + (c.A_33*u/3600).*h));
+J1 = ones(1,c.Nc)*(c.e1*c.Je/1000.*(c.A_31*(u.*u.*u./3600^3*c.rf1 + u/3600*c.g0*c.rhoW*c.z1) + (c.A_31*u/3600).*h+c.A_31*u/3600.*(c.rfTogether*c.A_1*(u.*u/3600^2))));
+J2 = ones(1,c.Nc)*(c.e2*c.Je/1000.*(c.A_32*(u.*u.*u./3600^3*c.rf2 + u/3600*c.g0*c.rhoW*c.z2) + (c.A_32*u/3600).*h+c.A_32*u/3600.*(c.rfTogether*c.A_1*(u.*u/3600^2))));
 
 %Defining that start and end volumen has to be the same 
 Js=c.K*(ones(1,c.Nc)*(c.A_1*u-c.d))^2;
 
 %Collecting the entire objective function
-problem.Objective = J1+J2+J3+Js;
+problem.Objective = J1+J2+Js;
 
 %Inital condition
 x0.u =[uPrev(2:end,1);uPrev(end,end)]; 
@@ -94,7 +80,7 @@ x0.u =[uPrev(2:end,1);uPrev(end,end)];
 solution = solve(problem,x0);
 
 %Setting output from the function
-up1=solution.u(1:3); 
+up1=solution.u(1:c.Nu); 
 uAll=solution.u;
 
 end
