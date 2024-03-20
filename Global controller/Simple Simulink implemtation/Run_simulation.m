@@ -15,7 +15,7 @@ simTime=simHour/c.AccTime*3600;
 c.Tsim=num2str(simTime); 
 c.tsSim=num2str(c.ts*3600); 
 
-simData=sim('GlobalMPC.slx',"StartTime",'600',"StopTime",c.Tsim,'FixedStep','200');
+simData=sim('GlobalMPC.slx',"StartTime",'0',"StopTime",c.Tsim,'FixedStep','200');
 
 %% Plotting a comparision between Matlab and Simulink global implementation
 clf
