@@ -24,6 +24,7 @@ c.v2=data.v2;
 c.A_31=data.A_31; 
 c.A_32=data.A_32; 
 
+
 %% Defining the total number of varaibles which has to be determinted
 total=c.Nc*c.Nu;
  %% Need a few empty matrix to allow for the change in option for the solver
