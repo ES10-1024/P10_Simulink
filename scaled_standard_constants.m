@@ -93,6 +93,10 @@ constants.Nc = 24;
 
 %Defining accelerated time (amount of accelered hour in one real world hour 
 constants.AccTime=6; 
+%% Variables defining for the consensus algortime 
+%Defining amount of iteration that the consensus ADMM should do 
+constants.iteration=300;
 
+constants.rho=0.08;
 
 end

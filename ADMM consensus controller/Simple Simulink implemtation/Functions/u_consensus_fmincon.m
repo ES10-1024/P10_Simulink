@@ -1,15 +1,30 @@
-function u_hat = u_consensus(lambda, z, c, n_unit,x)
+function u_hat = u_consensus_fmincon(lambda, data, z, n_unit,x)
 % Making the consensus problem for each of the pumps stations  where n_unit
 % describes which of the pumps the problem is solved for. 
 %Lambda= Lagrangian mulptipler 
 %z the consensus variable   
-%c standard constants 
 %n_unit which of the pumps is running 
 %x is the previous solution and i utilize as initial condition for the
 %solver
 %u_hat returns the solution for the given pump 
+%% loading in scaled standard constants 
+c=scaled_standard_constants; 
+%Moving data for eletricity price and demand: 
+c.Je=data.Je; 
+c.d=data.d;
+c.V=data.V; 
 
-%Defining the total number of varaibles which has to be determinted
+
+c.A_1=data.A_1; 
+c.A_2=data.A_2; 
+
+c.v1=data.v1; 
+c.v2=data.v2; 
+
+c.A_31=data.A_31; 
+c.A_32=data.A_32; 
+
+%% Defining the total number of varaibles which has to be determinted
 total=c.Nc*c.Nu;
  %% Need a few empty matrix to allow for the change in option for the solver
  Aeq=[];
@@ -21,10 +36,13 @@ total=c.Nc*c.Nu;
  %If it desired to change the settings for the solver, use the one listed
  %below: 
  options = optimoptions(@fmincon,'MaxFunctionEvaluations',10e4);
+
+
 %% Water level in water tower (need for the cost functions)
     h=@(u) c.g0*c.rhoW*1/c.At*(c.A_2*(c.A_1*u(1:total,1)-c.d)+c.V);
-%% Making cost function 
 
+    
+    %% Making cost function 
     %Pump one
 if (n_unit==1) 
         %Defining inequality constraints on matrix form 
