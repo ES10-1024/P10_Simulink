@@ -27,12 +27,10 @@ c.A_2 = tril(ones(c.Nc,c.Nc));
 %Making vi vectors utilized to pick out 1 of the 3 pumps values, add them up
 %and used to make extration limit. 
 c.v1=ones(c.Nu*c.Nc,1);
-c.v1(2:3:end) =0; 
-c.v1(3:3:end) =0;
+c.v1(2:c.Nu:end) =0; 
 
 c.v2=ones(c.Nu*c.Nc,1);
-c.v2(1:3:end) =0;
-c.v2(3:3:end) =0;
+c.v2(1:c.Nu:end) =0;
 
 %Making matrix which picks out 1 of the pumps for the enitre control
 %horizion
