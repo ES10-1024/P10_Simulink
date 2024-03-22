@@ -69,7 +69,7 @@ if usedAccTime == true
 else 
     StartPosition=(currentTime)-(floor((currentTime)/(SecondsPerWeek))*SecondsPerWeek);
 end 
-StartPosition=StartPosition/3600+1;
+StartPosition=round(StartPosition)/3600+1;
 %The consumption with noise is not weekly wrap around and can therefore be set: 
 consumptionNoise=NewDemand_data(StartPosition:StartPosition+c.Nc-1,1); 
 %Changing to m^3/s 
