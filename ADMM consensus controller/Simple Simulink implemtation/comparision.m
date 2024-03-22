@@ -1,4 +1,7 @@
+load("simulationOutput.mat")
 consensusUall=out.logsout{12}.Values.data; 
+
+
 index=1;
 load("matlabConsensusU.mat")
 xUsedMatlab=xUsed(:,:); 
@@ -66,3 +69,6 @@ end
 
 plot(procentWiseDifference)
 
+xlabel("hour")
+ylabel("Procenwise difference from global")
+grid

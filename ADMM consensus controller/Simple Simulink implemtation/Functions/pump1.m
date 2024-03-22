@@ -37,7 +37,7 @@ total=c.Nc*c.Nu;
  %If it desired to change the settings for the solver, use the one listed
  %below: 
  %options = [];
-  options = optimoptions(@fmincon,'Algorithm','sqp-legacy');
+ options = optimoptions(@fmincon,'Algorithm','sqp');
 
  %options = optimoptions(@fmincon,'Algorithm','interior-point');
 
