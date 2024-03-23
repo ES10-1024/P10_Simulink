@@ -33,21 +33,22 @@ WaterHeightmmLabAll=tow34.tank_34_mm.Data;
 TimesAll=tow34.tank_34_mm.Time; 
 %Igen så bort fra den først måling 
 index=1; 
+TimelookingFor=600; 
 for i=1:size(WaterHeightmmLabAll,3); 
 %række 3001 6001 også videre 
-TimelookingFor=600; 
-if  round(TimesAll)==TimelookingFor
+if  round(TimesAll(i,1))==TimelookingFor
     WaterHeightmmLab(index,1)=WaterHeightmmLabAll(1,1,i); 
     TimelookingFor=TimelookingFor+600;
+    index=index+1;
 end
 
 end 
 %%
-% clf
-% hold on 
-% plot(WaterHeightmmLab)
-% plot(WaterHeightmmSimulink) 
-% hold off 
+clf
+hold on 
+plot(WaterHeightmmLab)
+plot(WaterHeightmmSimulink) 
+hold off 
 
 
 
